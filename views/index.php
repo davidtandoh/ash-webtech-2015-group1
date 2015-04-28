@@ -68,57 +68,25 @@
                 {
                     var username = $("#username").val();
                     var password = $("#password").val();
-                   var url = "../controllers/user_controller.php?cmd=7&username="+username+"&password="+password; 
+                   var url = "../controllers/user_controller.php?cmd=7&username="+username+"&password="+password;
                    var obj = syncAjax ( url );
-                   if ( obj.result === 1 )
+                   if ( obj.result === 2 )
                    {
                        $("#loginstatus").text(obj.username);
                       window.location.replace("home.php");
                    }
-                   else 
+                   else if ( obj.result === 1 )
                    {
-                       $("#loginstatus").text(obj.message);
+                      window.location.replace("../project-ex2/index2.php");
                    }
+                    else
+                    {
+                        $("#loginstatus").text(obj.message);
+                    }
                 });
             });
         </script>
 
-
-
-//            if ( isset ( $_POST ['username'] ) & isset ( $_POST ['password'] ) )
-//            {
-//                include '../models/login_model.php';
-//                $login = new Login ( );
-//                $username = $_POST ['username'];
-//                $password = $_POST ['password'];
-//                $row = $login->user_login ( $username, $password );
-//                if ( !$row )
-//                {
-//                    echo "Failed to log in";
-//                }
-//                else
-//                {
-//                     session_start ( );
-//                     $user_type = $row['user_type'];
-//                    if ( $user_type == 'admin' )
-//                    {
-//                        $_SESSION ['user_type'] = $user_type;
-//                        echo "log in as admin";
-//                        echo $_SESSION ['user_id'] = $row['user_id'];
-//                        header("Location: home.php");
-//                        exit ( );
-//                    }
-//                    else if ( $user_type == 'regular')
-//                    {
-//                        $_SESSION ['user_type'] = $user_type;
-//                        echo "log in as regular";
-//                        echo $_SESSION ['user_id'] = $row['user_id'];
-//                         header("Location: home.php");
-//                        exit ( );
-//                    }
-//                   
-//                }
-//            }
 
     </body>
 

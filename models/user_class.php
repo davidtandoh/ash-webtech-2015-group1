@@ -95,7 +95,7 @@ class User extends adb
      */
     function user_preview_task ( $task_id )
     {
-        $preview_query = "select task_id, task_description, task_title, user_fname, user_sname, 
+        $preview_query = "select task_id, task_description, task_title, user_fname, user_sname, task_status,
                                     system_tasks.user_id, path, task_collaborator, task_start_date, task_end_date
                                     from system_tasks
                                     join system_users
