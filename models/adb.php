@@ -7,23 +7,30 @@
  */
 
 define("DB_HOST", 'localhost');
-define("DB_NAME", 'webtech');
+define("DB_NAME", 'system');
 define("DB_PORT", 3306);
-define("DB_USER","root");
-define("DB_PWORD","");
+define("DB_USER","admin");
+define("DB_PWORD","Ashesi@2016?");
+
+//define("DB_HOST", 'localhost');
+//define("DB_NAME", 'csashesi_fredrick-abayie');
+//define("DB_PORT", 3306);
+//define("DB_USER","csashesi_fa16");
+//define("DB_PWORD","db!hEi2As");
 
 define("LOG_LEVEL_SEC",0);
 define("LOG_LEVEL_DB_FAIL",0);
 
 define("PAGE_SIZE",10);
 
-function log_msg($level, $er_code, $msg, $mysql_msg){
+function log_msg ( $level, $er_code, $msg, $mysql_msg ) {
 	return 0;
 }
 
-class adb {
+class adb 
+{
 
-	/**error description*/
+    /**error description*/
     var $str_error;
     /*error code*/
     var $error;
@@ -34,7 +41,8 @@ class adb {
     /* query result resource*/
     var $result;
 
-    function adb() {
+    function adb ( )
+    {
        
         $this->er_code_prefix=1000;
         $this->link=false;
@@ -53,7 +61,7 @@ class adb {
             return 0;
         }
 
-        //display this code to user
+//        display this code to user
         $this->error="$er_code-$log_id";
         return $log_id;
     }
@@ -61,7 +69,8 @@ class adb {
     /**
 	* creates connection to database
 	*/
-    function connect() {
+    function establish_connection  ( )
+    {
 
         if($this->link)
         {
@@ -72,11 +81,11 @@ class adb {
 		
         if (!$this->link) {
             //if connection fail log error and set $str_error
-            //echo "not connected";	//debug line
+            echo "not connected";	//debug line
             $this->log_error(LOG_LEVEL_DB_FAIL,1, "connection failed  in db:connect()", mysql_error());
             return false;
         }
-		//echo "connected";
+//            echo "connected";
         if (!mysql_select_db(DB_NAME)) {
             
             $log_id = $this->log_error(LOG_LEVEL_DB_FAIL,2, "select db failed   in db:connect()", mysql_error($this->link));
@@ -87,19 +96,22 @@ class adb {
     }
 
         
-	/**
-	*returns a row from a data set
-	*/
-    function fetch() {
-        return mysql_fetch_assoc($this->result);
+    /**
+    *returns a row from a data set
+    */
+    function fetch ( )
+    {
+        return mysql_fetch_assoc ( $this->result );
     }
 
     /**
-	* connect to db and run a query 
-	*/
-    function query($str_sql) {
+    * connect to db and run a query 
+    */
+    function query ( $str_sql )
+    {
 		
-        if (!$this->connect()) {		
+        if ( !$this->establish_connection ( ) )
+            {		
             return false;
         }
         
@@ -112,24 +124,28 @@ class adb {
         return true;
     }
 	
-	/**
-	* returns number of rows in current dataset
-	*/
-    function get_num_rows() {
+    /**
+    * returns number of rows in current dataset
+    */
+    function get_num_rows ( )
+    {
         return mysql_num_rows($this->result);
     }
-	/**
-	*returns last auto generated id 
-	*/
-    function get_insert_id() {
+    
+    /**
+    *returns last auto generated id 
+    */
+    function get_insert_id ( )
+    {
         return mysql_insert_id($this->link);
+    }
+    
+    /**
+     * Function to close the sql connection
+     */
+    function close_connection ( )
+    {
+        return mysql_close ( $this->link );
     }
 	
 }
-
-?>
-
-
-
-
-
